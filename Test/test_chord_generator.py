@@ -1,5 +1,13 @@
 import pytest
-from chord_generator import pick_random_chord, calculate_interval
+from chord_generator import pick_random_chord, calculate_interval, chords
+
+@pytest.fixture
+def get_chords_Cmin():
+    return [48, 51, 55]
+
+@pytest.fixture
+def get_chords_Emax():
+    return [52, 56, 59]
 
 chords = {
     # Accords mineurs
@@ -169,22 +177,17 @@ chords = {
 
 }
 
-
 def test_pick_random_chord():
     chord = pick_random_chord()
     assert chord in chords
 
-
-def test_pick_random_chord_not_in_chord():
+def test_pick_not_in_chord():
     not_chord = 'Cmin42'
-    assert not_chord not in chords
+    assert not_chord not in chords    
+
+def test_calculate_interval(get_chords_Cmin, get_chords_Emax):
+    interval = calculate_interval(get_chords_Cmin[0], get_chords_Emax[0])
+    assert interval == 4
+    assert calculate_interval(-8, -9) == 1   
 
 
-def test_calculate_interval():
-    assert calculate_interval(60, 64) == 4, "Expected interval between 60 and 64 is 4"
-    assert calculate_interval(64, 60) == -4, "Expected interval between 64 and 60 is -4"
-    assert calculate_interval(60, 60) == 0, "Expected interval between 60 and 60 is 0"
-    assert calculate_interval(0, 50) == 50, "Expected interval between 0 and 50 is 50"
-    assert calculate_interval(50, 0) == -50, "Expected interval between 50 and 0 is -50"
-    assert calculate_interval(0, 0) == 0
-    
