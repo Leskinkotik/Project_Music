@@ -11,7 +11,7 @@ jobs:
     steps:
       - checkout
       - python/install-packages
-       - run:
+      - run:
           name: Install test dependencies
           command: pip install pytest pytest-cov
       - run:
@@ -27,7 +27,7 @@ jobs:
       # Replace this with steps to deploy to users
       - run:
           name: deploy
-          command: '#e.g. ./deploy.sh'
+          command: "#e.g. ./deploy.sh"
 workflows:
   build-and-test:
     jobs:
